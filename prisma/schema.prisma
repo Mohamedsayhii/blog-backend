@@ -20,3 +20,28 @@ model Session {
   data      String
   expiresAt DateTime
 }
+
+model Post {
+  id        String    @id @default(uuid())
+  title     String
+  content   String
+  date      DateTime  @default(now())
+  comments  Comment[]
+  published Boolean
+}
+
+model Comment {
+  id     String   @id @default(uuid())
+  author String
+  text   String
+  date   DateTime @default(now())
+  Post   Post?    @relation(fields: [postId], references: [id])
+  postId String?
+}
+
+model User {
+  id       String @id @default(uuid())
+  email    String @unique
+  username String @unique
+  password String
+}
