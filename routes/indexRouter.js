@@ -1,6 +1,11 @@
-const { Router } = require('express');
-const indexController = require('../controllers/indexController');
+import auth from './authRouter';
+import comments from './commentsRouter';
+import posts from './postsRouter';
 
-const indexRouter = Router();
+const routes = {
+	auth,
+	comments,
+	posts,
+};
 
-module.exports = indexRouter;
+export default routes;
