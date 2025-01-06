@@ -4,11 +4,13 @@ const passport = require('passport');
 const session = require('express-session');
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
 const prisma = require('./database/prisma');
+const cors = require('cors');
 
 require('dotenv').config();
 
 const app = express();
-
+cors;
+app.use(express.cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
