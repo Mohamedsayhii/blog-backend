@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import passport from 'passport';
 import { ExtractJwt, JwtStrategy } from 'passport-jwt';
 import prisma from '../database/prisma';
