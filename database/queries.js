@@ -23,4 +23,14 @@ const findUser = async (email) => {
 	});
 };
 
-module.exports = { createUser, findUser };
+const createPost = async (title, content, published) => {
+	return await prisma.post.create({
+		data: {
+			title: title,
+			content: content,
+			published: published,
+		},
+	});
+};
+
+module.exports = { createUser, findUser, createPost };
