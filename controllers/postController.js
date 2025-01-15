@@ -24,3 +24,14 @@ exports.getAllPosts = asyncHandler(async (req, res) => {
 
 	return res.status(200).json(posts);
 });
+
+exports.getPost = asyncHandler(async (req, res) => {
+	const { postId } = req.params;
+
+	const post = await db.getPost(postId);
+	if (!post) {
+		throw new CustomError(`Post with id: ${postId} doesn't exist`, 404);
+	}
+
+	return res.status(200).json(post);
+});

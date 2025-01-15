@@ -43,4 +43,14 @@ const getPosts = async () => {
 	return posts;
 };
 
-module.exports = { createUser, findUser, createPost, getPosts };
+const getPost = async (postId) => {
+	const post = await prisma.post.findUnique({
+		where: {
+			id: postId,
+		},
+	});
+
+	return post;
+};
+
+module.exports = { createUser, findUser, createPost, getPosts, getPost };
