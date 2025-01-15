@@ -15,3 +15,12 @@ exports.createPost = [
 		return res.status(200).json(post);
 	}),
 ];
+
+exports.getAllPosts = asyncHandler(async (req, res) => {
+	const posts = await db.getPosts();
+	if (!posts) {
+		throw new CustomError(`Couldn't fetch posts from database`, 400);
+	}
+
+	return res.status(200).json(posts);
+});

@@ -16,21 +16,31 @@ const createUser = async (email, username, password) => {
 };
 
 const findUser = async (email) => {
-	return await prisma.user.findUnique({
+	const user = await prisma.user.findUnique({
 		where: {
 			email,
 		},
 	});
+
+	return user;
 };
 
 const createPost = async (title, content, published) => {
-	return await prisma.post.create({
+	const post = await prisma.post.create({
 		data: {
 			title: title,
 			content: content,
 			published: published,
 		},
 	});
+
+	return post;
 };
 
-module.exports = { createUser, findUser, createPost };
+const getPosts = async () => {
+	const posts = await prisma.post.findMany();
+
+	return posts;
+};
+
+module.exports = { createUser, findUser, createPost, getPosts };
