@@ -2,6 +2,7 @@ const { validatePost } = require('../middlewares/validateFields');
 import asyncHandler from 'express-async-handler';
 import db from '../database/queries';
 import CustomError from '../utils/customError';
+import { post } from '../database/prisma';
 
 exports.createPost = [
 	validatePost,
@@ -29,6 +30,22 @@ exports.getPost = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
 
 	const post = await db.getPost(postId);
+	if (!post) {
+		throw new CustomError(`Post with id: ${postId} doesn't exist`, 404);
+	}
+
+	return res.status(200).json(post);
+});
+
+exports.updatePost = asyncHandler(async (req, res) => {
+	const { postId } = req.params;
+	const { title, content, published } = req.body;
+	
+	if (!title || !content) {
+		throw new CustomError('Title and content are required', 400);
+	}
+
+	const post = await db.updatePost(postId, title, content, published);
 	if (!post) {
 		throw new CustomError(`Post with id: ${postId} doesn't exist`, 404);
 	}
