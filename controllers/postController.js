@@ -40,7 +40,7 @@ exports.getPost = asyncHandler(async (req, res) => {
 exports.updatePost = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
 	const { title, content, published } = req.body;
-	
+
 	if (!title || !content) {
 		throw new CustomError('Title and content are required', 400);
 	}
@@ -51,4 +51,11 @@ exports.updatePost = asyncHandler(async (req, res) => {
 	}
 
 	return res.status(200).json(post);
+});
+
+exports.deletePost = asyncHandler(async (req, res) => {
+	const { postId } = req.params;
+	const deletedPost = await db.deletePost(postId);
+
+	return res.status(200).json(deletedPost);
 });

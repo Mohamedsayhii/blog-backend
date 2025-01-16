@@ -69,6 +69,12 @@ const updatePost = async (postId, title, content, published) => {
 	return post;
 };
 
+const deletePost = async (postId) => {
+	const post = prisma.post.delete({ where: postId });
+
+	return post;
+};
+
 module.exports = {
 	createUser,
 	findUser,
@@ -76,4 +82,5 @@ module.exports = {
 	getPosts,
 	getPost,
 	updatePost,
+	deletePost,
 };
