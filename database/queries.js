@@ -81,6 +81,18 @@ const getComments = async () => {
 	return comments;
 };
 
+const createComment = async (author, text, postId) => {
+	const comment = await prisma.comment.create({
+		data: {
+			author: author,
+			text: text,
+			postId: postId,
+		},
+	});
+
+	return comment;
+};
+
 module.exports = {
 	createUser,
 	findUser,
@@ -90,4 +102,5 @@ module.exports = {
 	updatePost,
 	deletePost,
 	getComments,
+	createComment,
 };
