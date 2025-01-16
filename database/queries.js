@@ -75,6 +75,12 @@ const deletePost = async (postId) => {
 	return post;
 };
 
+const getComments = async () => {
+	const comments = prisma.comment.findMany();
+
+	return comments;
+};
+
 module.exports = {
 	createUser,
 	findUser,
@@ -83,4 +89,5 @@ module.exports = {
 	getPost,
 	updatePost,
 	deletePost,
+	getComments,
 };

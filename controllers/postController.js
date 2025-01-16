@@ -2,7 +2,6 @@ const { validatePost } = require('../middlewares/validateFields');
 import asyncHandler from 'express-async-handler';
 import db from '../database/queries';
 import CustomError from '../utils/customError';
-import { post } from '../database/prisma';
 
 exports.createPost = [
 	validatePost,
