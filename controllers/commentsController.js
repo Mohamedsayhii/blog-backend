@@ -3,7 +3,8 @@ import db from '../database/queries';
 import CustomError from '../utils/customError';
 
 exports.getAllComments = asyncHandler(async (req, res) => {
-	const comments = await db.getComments();
+	const { postId } = req.params;
+	const comments = await db.getComments(postId);
 	if (!comments) {
 		throw new CustomError(`Comments not fetched`, 400);
 	}

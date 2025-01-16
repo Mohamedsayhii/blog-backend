@@ -70,13 +70,17 @@ const updatePost = async (postId, title, content, published) => {
 };
 
 const deletePost = async (postId) => {
-	const post = prisma.post.delete({ where: postId });
+	const post = await prisma.post.delete({ where: postId });
 
 	return post;
 };
 
-const getComments = async () => {
-	const comments = prisma.comment.findMany();
+const getComments = async (postId) => {
+	const comments = await prisma.comment.findMany({
+		where: {
+			postId: postId,
+		},
+	});
 
 	return comments;
 };
