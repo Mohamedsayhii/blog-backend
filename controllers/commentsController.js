@@ -14,6 +14,19 @@ exports.getAllComments = asyncHandler(async (req, res) => {
 
 exports.createComment = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
+
+	const { author, text } = req.body;
+	if (!author || !text) {
+		throw new CustomError(`Author and text are required`, 400);
+	}
+
+	const comment = db.createComment(author, text, postId);
+
+	res.status(200).json(comment);
+});
+
+exports.updateComment = asyncHandler(async (req, res) => {
+	const { postId, commentId } = req.params;
 	const post = db.getPost(postId);
 	if (!post) {
 		throw new CustomError(`Post with id: ${postId} is not found`, 404);
@@ -24,7 +37,7 @@ exports.createComment = asyncHandler(async (req, res) => {
 		throw new CustomError(`Author and text are required`, 400);
 	}
 
-	const comment = db.createComment(author, text, postId);
+	const comment = await db.updateComment(postId, commentId, author, text);
 
 	res.status(200).json(comment);
 });
