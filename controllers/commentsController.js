@@ -41,3 +41,11 @@ exports.updateComment = asyncHandler(async (req, res) => {
 
 	res.status(200).json(comment);
 });
+
+exports.deleteComment = asyncHandler(async (req, res) => {
+	const { postId, commentId } = req.params;
+
+	const comment = await db.deleteComment(postId, commentId);
+
+	return comment;
+});
