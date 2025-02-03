@@ -1,5 +1,5 @@
-import prisma from './prisma';
-import { hash } from 'bcryptjs';
+import prisma from './prisma.js';
+import hash from 'bcryptjs';
 
 const createUser = async (email, username, password) => {
 	const cryptedPassword = hash(password, 10, async (err, hashedPassword) => {
@@ -124,7 +124,7 @@ const deleteComment = async (postId, commentId) => {
 	return comment;
 };
 
-module.exports = {
+const db = {
 	createUser,
 	findUser,
 	createPost,
@@ -137,3 +137,5 @@ module.exports = {
 	updateComment,
 	deleteComment,
 };
+
+export default db;

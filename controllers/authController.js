@@ -1,18 +1,18 @@
 import asyncHandler from 'express-async-handler';
-import db from '../database/queries';
-import validateLogin from '../middlewares/validateFields';
+import db from '../database/queries.js';
+import { validateLogin } from '../middlewares/validateFields.js';
 import { validationResult } from 'express-validator';
-import CustomError from '../utils/customError';
-import { compare } from 'bcryptjs';
+import CustomError from '../utils/customError.js';
+import compare from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
 	const { email, username, password } = req.body;
 	await db.createUser(email, username, password);
 	res.redirect('/auth/login');
 };
 
-exports.login = [
+export const login = [
 	validateLogin,
 	asyncHandler(async (req, res) => {
 		const errors = validationResult(req);

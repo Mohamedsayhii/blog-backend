@@ -1,8 +1,8 @@
 import asyncHandler from 'express-async-handler';
-import db from '../database/queries';
-import CustomError from '../utils/customError';
+import db from '../database/queries.js';
+import CustomError from '../utils/customError.js';
 
-exports.getAllComments = asyncHandler(async (req, res) => {
+export const getAllComments = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
 	const comments = await db.getComments(postId);
 	if (!comments) {
@@ -12,7 +12,7 @@ exports.getAllComments = asyncHandler(async (req, res) => {
 	res.status(200).json(comments);
 });
 
-exports.createComment = asyncHandler(async (req, res) => {
+export const createComment = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
 
 	const { author, text } = req.body;
@@ -25,7 +25,7 @@ exports.createComment = asyncHandler(async (req, res) => {
 	res.status(200).json(comment);
 });
 
-exports.updateComment = asyncHandler(async (req, res) => {
+export const updateComment = asyncHandler(async (req, res) => {
 	const { postId, commentId } = req.params;
 	const post = db.getPost(postId);
 	if (!post) {
@@ -42,7 +42,7 @@ exports.updateComment = asyncHandler(async (req, res) => {
 	res.status(200).json(comment);
 });
 
-exports.deleteComment = asyncHandler(async (req, res) => {
+export const deleteComment = asyncHandler(async (req, res) => {
 	const { postId, commentId } = req.params;
 
 	const comment = await db.deleteComment(postId, commentId);

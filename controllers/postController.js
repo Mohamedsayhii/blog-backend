@@ -1,9 +1,9 @@
-const { validatePost } = require('../middlewares/validateFields');
+import { validatePost } from '../middlewares/validateFields.js';
 import asyncHandler from 'express-async-handler';
-import db from '../database/queries';
-import CustomError from '../utils/customError';
+import db from '../database/queries.js';
+import CustomError from '../utils/customError.js';
 
-exports.createPost = [
+export const createPost = [
 	validatePost,
 	asyncHandler(async (req, res) => {
 		const { title, content, published } = req.body;
@@ -16,7 +16,7 @@ exports.createPost = [
 	}),
 ];
 
-exports.getAllPosts = asyncHandler(async (req, res) => {
+export const getAllPosts = asyncHandler(async (req, res) => {
 	const posts = await db.getPosts();
 	if (!posts) {
 		throw new CustomError(`Couldn't fetch posts from database`, 400);
@@ -25,7 +25,7 @@ exports.getAllPosts = asyncHandler(async (req, res) => {
 	return res.status(200).json(posts);
 });
 
-exports.getPost = asyncHandler(async (req, res) => {
+export const getPost = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
 
 	const post = await db.getPost(postId);
@@ -36,7 +36,7 @@ exports.getPost = asyncHandler(async (req, res) => {
 	return res.status(200).json(post);
 });
 
-exports.updatePost = asyncHandler(async (req, res) => {
+export const updatePost = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
 	const { title, content, published } = req.body;
 
@@ -52,7 +52,7 @@ exports.updatePost = asyncHandler(async (req, res) => {
 	return res.status(200).json(post);
 });
 
-exports.deletePost = asyncHandler(async (req, res) => {
+export const deletePost = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
 	const deletedPost = await db.deletePost(postId);
 

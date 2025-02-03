@@ -1,6 +1,6 @@
-import auth from './authRouter';
-import comments from './commentsRouter';
-import posts from './postsRouter';
+import auth from './authRouter.js';
+import comments from './commentsRouter.js';
+import posts from './postsRouter.js';
 
 const routes = {
 	auth,
