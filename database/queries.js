@@ -30,7 +30,7 @@ const createPost = async (title, content, published) => {
 		data: {
 			title: title,
 			content: content,
-			published: published,
+			published: published === 'true',
 		},
 	});
 
@@ -62,7 +62,7 @@ const updatePost = async (postId, title, content, published) => {
 		data: {
 			title: title,
 			content: content,
-			published: published,
+			published: published === 'true',
 		},
 	});
 
