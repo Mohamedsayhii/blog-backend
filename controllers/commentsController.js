@@ -9,7 +9,7 @@ export const getAllComments = asyncHandler(async (req, res) => {
 		throw new CustomError(`Comments not fetched`, 400);
 	}
 
-	res.status(200).json(comments);
+	return res.status(200).json(comments);
 });
 
 export const createComment = asyncHandler(async (req, res) => {
@@ -20,9 +20,9 @@ export const createComment = asyncHandler(async (req, res) => {
 		throw new CustomError(`Author and text are required`, 400);
 	}
 
-	const comment = db.createComment(author, text, postId);
+	const comment = await db.createComment(author, text, postId);
 
-	res.status(200).json(comment);
+	return res.status(200).json(comment);
 });
 
 export const updateComment = asyncHandler(async (req, res) => {
@@ -39,7 +39,7 @@ export const updateComment = asyncHandler(async (req, res) => {
 
 	const comment = await db.updateComment(postId, commentId, author, text);
 
-	res.status(200).json(comment);
+	return res.status(200).json(comment);
 });
 
 export const deleteComment = asyncHandler(async (req, res) => {
@@ -47,5 +47,5 @@ export const deleteComment = asyncHandler(async (req, res) => {
 
 	const comment = await db.deleteComment(postId, commentId);
 
-	res.status(200).json(comment);
+	return res.status(200).json(comment);
 });
