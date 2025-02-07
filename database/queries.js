@@ -70,7 +70,13 @@ const updatePost = async (postId, title, content, published) => {
 };
 
 const deletePost = async (postId) => {
-	const post = await prisma.post.delete({ where: postId });
+	await prisma.comment.deleteMany({
+		where: {
+			postId: postId,
+		},
+	});
+
+	const post = await prisma.post.delete({ where: { id: postId } });
 
 	return post;
 };
