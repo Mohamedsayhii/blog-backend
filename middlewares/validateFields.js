@@ -3,6 +3,7 @@ import DOMPurify from 'dompurify';
 
 const isRequired = 'is required';
 const minCharacters = (c) => `must have at least ${c} characters`;
+const maxCharacters = (c) => `must have no more than ${c} characters`;
 
 const validateSignUp = [
 	body('username')
@@ -52,18 +53,19 @@ const validateLogin = [
 		.escape(),
 ];
 
-const validateMessage = [
-	body('username')
+const validateComment = [
+	body('author')
 		.trim()
 		.notEmpty()
-		.withMessage(`Username ${isRequired}`)
-		.isLength({ min: 2 })
-		.withMessage(`Username ${minCharacters(2)}`)
+		.withMessage(`Author ${isRequired}`)
+		.isLength({ min: 2, max: 20 })
+		.withMessage(`Author ${minCharacters(2)}`)
+		.withMessage(`Author ${maxCharacters(20)}`)
 		.escape(),
-	body('content')
+	body('text')
 		.trim()
 		.isLength({ min: 2 })
-		.withMessage(`Content ${minCharacters(2)}`)
+		.withMessage(`Text ${minCharacters(2)}`)
 		.escape(),
 ];
 
@@ -81,4 +83,4 @@ const validatePost = [
 		.withMessage(`Content ${minCharacters(2)}`),
 ];
 
-export { validateLogin, validateSignUp, validateMessage, validatePost };
+export { validateLogin, validateSignUp, validateComment, validatePost };
