@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import db from '../database/queries.js';
 import CustomError from '../utils/customError.js';
+import { validateComment } from '../middlewares/validateFields.js';
+import { validationResult } from 'express-validator';
 
 export const getAllComments = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
@@ -12,18 +14,26 @@ export const getAllComments = asyncHandler(async (req, res) => {
 	return res.status(200).json(comments);
 });
 
-export const createComment = asyncHandler(async (req, res) => {
-	const { postId } = req.params;
+export const createComment = [
+	validateComment,
+	asyncHandler(async (req, res) => {
+		const { postId } = req.params;
+		const { author, text } = req.body;
 
-	const { author, text } = req.body;
-	if (!author || !text) {
-		throw new CustomError(`Author and text are required`, 400);
-	}
+		if (!author || !text) {
+			throw new CustomError('Author and text are required', 400);
+		}
 
-	const comment = await db.createComment(author, text, postId);
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			const errorMessages = errors.array().map((error) => error.msg);
+			throw new CustomError(errorMessages, 400);
+		}
 
-	return res.status(200).json(comment);
-});
+		const comment = await db.createComment(author, text, postId);
+		return res.status(200).json(comment);
+	}),
+];
 
 export const updateComment = asyncHandler(async (req, res) => {
 	const { postId, commentId } = req.params;
