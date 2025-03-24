@@ -1,10 +1,8 @@
 import prisma from './prisma.js';
-import hash from 'bcryptjs';
+import bcryptjs from 'bcryptjs';
 
 const createUser = async (email, username, password) => {
-	const cryptedPassword = hash(password, 10, async (err, hashedPassword) => {
-		console.log(`Password couldn't be hashed. Error: \n ${err}`);
-	});
+	const cryptedPassword = await bcryptjs.hash(password, 10);
 
 	await prisma.user.create({
 		data: {
