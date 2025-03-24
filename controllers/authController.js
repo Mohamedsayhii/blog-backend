@@ -3,7 +3,7 @@ import db from '../database/queries.js';
 import { validateLogin } from '../middlewares/validateFields.js';
 import { validationResult } from 'express-validator';
 import CustomError from '../utils/customError.js';
-import compare from 'bcryptjs';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res) => {
@@ -30,7 +30,7 @@ export const login = [
 			throw new CustomError('Email does not exist', 401);
 		}
 
-		const match = await compare(password, user.password);
+		const match = await bcryptjs.compare(password, user.password);
 		if (!match) {
 			throw new CustomError('Password is incorrect', 401);
 		}
