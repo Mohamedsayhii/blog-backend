@@ -79,6 +79,12 @@ const deletePost = async (postId) => {
 	return post;
 };
 
+const getAllComments = async () => {
+	const comments = prisma.comment.findMany();
+
+	return comments;
+};
+
 const getComments = async (postId) => {
 	const comments = await prisma.comment.findMany({
 		where: {
@@ -136,6 +142,7 @@ const db = {
 	getPost,
 	updatePost,
 	deletePost,
+	getAllComments,
 	getComments,
 	createComment,
 	updateComment,

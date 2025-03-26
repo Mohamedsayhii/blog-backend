@@ -3,7 +3,8 @@ import * as commentsController from '../controllers/commentsController.js';
 
 const commentsRouter = Router();
 
-commentsRouter.get('/:postId/comments', commentsController.getAllComments);
+commentsRouter.get('/comments', commentsController.getAllComments);
+commentsRouter.get('/:postId/comments', commentsController.getAllPostComments);
 commentsRouter.post('/:postId/comments', commentsController.createComment);
 commentsRouter.put(
 	'/:postId/comments/:commentId',

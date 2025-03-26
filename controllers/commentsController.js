@@ -5,6 +5,14 @@ import { validateComment } from '../middlewares/validateFields.js';
 import { validationResult } from 'express-validator';
 
 export const getAllComments = asyncHandler(async (req, res) => {
+	const comments = await db.getAllComments();
+
+	if (!comments) throw new CustomError('Comments not fetched', 400);
+
+	return res.status(200).json(comments);
+});
+
+export const getAllPostComments = asyncHandler(async (req, res) => {
 	const { postId } = req.params;
 	const comments = await db.getComments(postId);
 	if (!comments) {
