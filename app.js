@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/posts', routes.posts);
-app.use('/posts', routes.comments);
+app.use('/comments', routes.comments);
 app.use('/auth', routes.auth);
 
 app.use(errorHandler);
